@@ -7700,7 +7700,8 @@ the cache."
                               ;; If FUNC moved point forward, update
                               ;; START.
                               (when org-element-cache-map-continue-from
-                                (goto-char org-element-cache-map-continue-from))
+                                (goto-char org-element-cache-map-continue-from)
+                                (setq start org-element-cache-map-continue-from))
                               (when (> (point) start)
                                 (move-start-to-next-match nil))
                               ;; Drop nil.

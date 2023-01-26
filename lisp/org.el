@@ -11010,6 +11010,7 @@ headlines matching this string."
 		                   org-outline-regexp))))
             (org-element-cache-map
              (lambda (el)
+               (setq org-map-continue-from nil)
                (goto-char (org-element-property :begin el))
                (setq todo (org-element-property :todo-keyword el)
                      level (org-element-property :level el)
@@ -11084,7 +11085,6 @@ headlines matching this string."
                        'type (concat "tagsmatch" ts-date-type))
 	             (push txt rtn))
 	            ((functionp action)
-	             (setq org-map-continue-from nil)
 	             (save-excursion
 		       (setq rtn1 (funcall action))
 		       (push rtn1 rtn)))
@@ -11092,7 +11092,8 @@ headlines matching this string."
 
 	           ;; if we are to skip sublevels, jump to end of subtree
 	           (unless org-tags-match-list-sublevels
-	             (goto-char (1- (org-element-property :end el))))))
+	             (goto-char (1- (org-element-property :end el)))
+                     (setq org-map-continue-from (org-element-property :end el)))))
                ;; Get the correct position from where to continue
 	       (when org-map-continue-from
                  (setq org-element-cache-map-continue-from org-map-continue-from)
